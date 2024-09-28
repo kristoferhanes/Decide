@@ -1,0 +1,28 @@
+{
+  "name": "decide",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "bin": {
+    "decide": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Kristofer Hanes",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^8.0.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.0.0"
+  }
+}
