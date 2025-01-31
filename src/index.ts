@@ -1,53 +1,37 @@
 import { Command } from 'commander';
 import { createInterface } from 'readline';
 import { evidence, KeySet, MassFunction } from './mass-function';
-import { star, toStar } from './star';
+import { Criteria, loadConfig, Option } from './config';
 
 const program = new Command();
 
-program.name('decide').description('A simple CLI tool to help you make decisions').version('1.0.0');
+program
+  .name('decide')
+  .description('A simple CLI tool to help you make decisions')
+  .version('1.0.0')
+  .option('-c, --config <file>', 'path to config file');
 
 program.action(() => {
   const rl = createInterface({ input: process.stdin, output: process.stdout });
 
-  const askQuestion = (question: string): Promise<string> =>
-    new Promise((resolve) => {
-      rl.question(question, (answer) => {
-        resolve(answer);
-      });
-    });
-
   const main = async () => {
-    const criteria: { name: string; weight: number }[] = [];
-    const options: { name: string; ratings: { [key: string]: number } }[] = [];
+    const criteria: Criteria[] = [];
+    const options: Option[] = [];
+    const configFile = program.opts().config;
 
-    // Input criteria and weights
-    while (true) {
-      const criterion = await askQuestion('Enter a criterion (or press enter to finish): ');
-      if (!criterion) {
-        break;
+    if (configFile) {
+      try {
+        const config = await loadConfig(configFile);
+        criteria.push(...config.criteria);
+        options.push(...config.options);
+      } catch (error) {
+        console.error('Failed to load config file:', error);
+        rl.close();
+        return;
       }
-      const weight = parseFloat(await askQuestion(`Enter the weight for ${criterion} (1 - 5): `));
-      criteria.push({ name: criterion, weight: star(weight) });
     }
-
-    // Input options and ratings
-    while (true) {
-      console.log('');
-      const option = await askQuestion('Enter an option (or press enter to finish): ');
-      if (!option) {
-        break;
-      }
-      const ratings: Record<string, number> = {};
-      for (const criterion of criteria) {
-        const rating = parseFloat(await askQuestion(`Enter the rating for ${criterion.name} for ${option} (1 - 5): `));
-        ratings[criterion.name] = star(rating);
-      }
-      options.push({ name: option, ratings });
-    }
-
     if (criteria.length === 0 || options.length === 0) {
-      console.error('You must enter at least one criterion and one option.');
+      console.error('There must be at least one criterion and one option.');
       rl.close();
       return;
     }
@@ -67,7 +51,7 @@ program.action(() => {
 
     console.log('\nDecision:');
     for (const [option, mass] of combinedMassFunction.masses) {
-      console.log(`${option}: ${toStar(mass)}`);
+      console.log(`${option}: ${mass}`);
     }
 
     rl.close();

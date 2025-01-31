@@ -27,44 +27,41 @@ npm i
 Then you can run the application using the following command:
 
 ```bash
-npm start
+npm start -- -c <PATH_TO_CONFIG_FILE>
 ```
 
-## Using the application
+## Configuration File Format
 
-The application will ask you to enter the decision criteria you want to consider for each option. You can enter as many criteria as you like. For each criteria, you will be asked provide a weight for its importance. The weight should be a number between 1 and 5, where 1 is not important and 5 is very important.
+This application uses a YAML configuration file to specify the criteria and options for the decision. The configuration file should have a `criteria` section that lists the criteria and their weights, and an `options` section that lists the options and their ratings for each criterion. The weights and ratings should be numbers between 0 and 1, not inclusive, that represent the importance of each criterion.
 
-After entering the criteria, you will be asked to enter the options you want to consider. You can enter as many options as you like. For each option, you will be asked to rate how well it meets each criteria. The rating should be a number between 1 and 5, where 1 is poor and 5 is excellent.
+### Example
 
-Once you have entered all the criteria and options, the application will calculate the final rating for each option and display the weights for each option. The option with the highest weight is the best overall option.
+```yaml
+criteria:
+  - name: 'Cost'
+    weight: 0.5
+  - name: 'Quality'
+    weight: 0.3
+  - name: 'Durability'
+    weight: 0.2
 
-## Example
-
-Here is an example of how you might use the application:
-
+options:
+  - name: 'Option A'
+    ratings:
+      Cost: 0.8
+      Quality: 0.7
+      Durability: 0.9
+  - name: 'Option B'
+    ratings:
+      Cost: 0.6
+      Quality: 0.8
+      Durability: 0.7
+  - name: 'Option C'
+    ratings:
+      Cost: 0.7
+      Quality: 0.9
+      Durability: 0.8
 ```
-Enter a criterion (or press enter to finish): cost
-Enter the weight for cost (1 - 5): 5
-Enter a criterion (or press enter to finish): performance
-Enter the weight for performance (1 - 5): 3
-Enter a criterion (or press enter to finish):
-
-Enter an option (or press enter to finish): option 1
-Enter the rating for cost for option 1 (1 - 5): 3
-Enter the rating for performance for option 1 (1 - 5): 4
-
-Enter an option (or press enter to finish): option 2
-Enter the rating for cost for option 2 (1 - 5): 4
-Enter the rating for performance for option 2 (1 - 5): 3
-
-Enter an option (or press enter to finish):
-
-Decision:
-option 1: 2.63
-option 2: 3.37
-```
-
-In this example, the criteria are cost and performance. Cost has a weight of 5 and performance has a weight of 3. There are two options, option 1 and option 2. Option 1 has a cost rating of 3 and a performance rating of 4. Option 2 has a cost rating of 4 and a performance rating of 3. The final ratings are 2.63 for option 1 and 3.37 for option 2, so option 2 is the best overall option.
 
 ## References
 
