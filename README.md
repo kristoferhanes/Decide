@@ -6,11 +6,11 @@ This is a simple decision making tool. It is a CLI application that helps you ma
 
 ### Criteria
 
-The criteria are the factors you want to consider when making a decision. For example, if you are deciding between two cars, the criteria might be cost, performance, fuel efficiency, and safety. Each criterion should have a weight that represents its importance in the decision. The weight should be a number between 1 and 5, where 1 is not important and 5 is very important.
+The criteria are the factors you want to consider when making a decision. For example, if you are deciding between two cars, the criteria might be cost, performance, fuel efficiency, and safety. Each criterion should have a weight that represents its importance in the decision.
 
 ### Options
 
-The options are the choices you are considering. For example, if you are deciding between two cars, the options might be a Honda Civic and a Toyota Corolla. Each option should have a rating for each criterion that represents how well it meets that criterion. The rating should be a number between 1 and 5, where 1 is poor and 5 is excellent.
+The options are the choices you are considering. For example, if you are deciding between two cars, the options might be a Honda Civic and a Toyota Corolla. Each option should have a rating for each criterion that represents how well it meets that criterion.
 
 ### Dempster-Shafer theory
 
